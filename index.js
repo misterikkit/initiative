@@ -25,12 +25,15 @@ app.post('/create', (req, res) => {
     // res.redirect(`/game/${newGame.id}`);
 })
 
-app.get('/game/:id', (req, res) => {
+app.get('/gamestate/:id', (req, res) => {
     if (!req.params.id in games) {
         res.sendStatus(404);
         return;
     }
-    res.send(games[req.params.id]);
+    const game = games[req.params.id];
+    res.setHeader('Cache-Control', 'no-cache');
+    res.type('json'); // shorthand for content-type header
+    res.send(game);
 })
 
 app.listen(port, () => {
