@@ -1,8 +1,12 @@
 const characters = [];
+
 function addRow() {
     const name = $('#characterName').val();
     const initVal = $('#characterInit').val();
-    $('#theList').append(`<li>${name}: ${initVal}</li>`);
+    const tmpl = $('#listItem').html();
+    $('#theList').append(
+        Mustache.render(tmpl, { name: name, initVal: initVal })
+    );
     characters.push({
         name: name,
         initiative: initVal

@@ -11,7 +11,9 @@
     <h1>Create tracker</h1>
 
     <ol id="theList"> </ol>
-
+    <script id="listItem" type="x-tmpl-moustache">
+        <li>{{name}}: {{initVal}}</li>
+    </script>
 
     <form>
         Add entry:
@@ -22,6 +24,7 @@
     <form id="initForm" method="POST" action="/create">
         <input type="submit" value="Let's Go!">
     </form>
+    <script src="https://unpkg.com/mustache@latest"></script>
     <script src="js/create.js"></script>
 </body>
 
