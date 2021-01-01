@@ -2,11 +2,27 @@
 <html>
 
 <head>
-    <title>Roll for initiative!</title>
+    <title>Create tracker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 
 <body>
-    <h1>Roll for initiative!</h1>
+    <h1>Create tracker</h1>
+
+    <ol id="theList"> </ol>
+
+
+    <form>
+        Add entry:
+        <input id="characterName" type="text" placeholder="character/creature name">
+        <input id="characterInit" type="number" placeholder="initiative">
+        <input id="addCharacter" type="submit" value="Add!">
+    </form>
+    <form id="initForm" method="POST" action="/create">
+        <input type="submit" value="Let's Go!">
+    </form>
+    <script src="js/create.js"></script>
 </body>
 
 </html>
