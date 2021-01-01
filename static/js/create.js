@@ -32,7 +32,7 @@ function handleSubmit() {
     })
         .done((info) => {
             if (info.gameId) {
-                location.href = `/manage.html?gameID=${info.gameId}`;
+                location.href = `/admin.html?gameID=${info.gameId}`;
             }
             console.error('Cannot use game ID from', info);
         })
