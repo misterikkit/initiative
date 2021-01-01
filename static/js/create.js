@@ -47,6 +47,11 @@ function init() {
     });
     $('#characterName').focus();
     $('#initForm').submit(handleSubmit);
+    // Submit on ctrl+enter
+    $('body').keypress((event) => {
+        const ctrlKey = 10;
+        if (event.keyCode === ctrlKey && event.ctrlKey) { handleSubmit(); }
+    })
 }
 
 $(init);
