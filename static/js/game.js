@@ -8,12 +8,8 @@ function getGameState() {
 
 function render(game) {
     game.characters.sort(cmp);
-    const tmpl = $('#listItem').html();
-    game.characters.map((char) => {
-        $('#theList').append(
-            Mustache.render(tmpl, { name: char.name, initVal: char.initiative })
-        );
-    });
+    const tmpl = $('#tmplPlayerList').html();
+    $('#playerList').html(Mustache.render(tmpl, { game: game }));
 }
 
 function cmp(a, b) {

@@ -8,9 +8,11 @@
 
 <body>
 
-    <ol id="theList"></ol>
-    <script id="listItem" type="x-tmpl-moustache">
+    <ol id="playerList"></ol>
+    <script id="tmplPlayerList" type="x-tmpl-moustache">
+    {{#game.characters}}
         <li>{{name}}</li>
+    {{/game.characters}}
     </script>
     <script src="https://unpkg.com/mustache@4.1.0"></script>
     <script src="/js/game.js"></script>
