@@ -1,12 +1,25 @@
 let gameID = '';
 
-function getGameState() {
-    $.get(`/gamestate/${gameID}`)
-        .done(render)
-        .fail(console.error);
+function connect() {
+    const proto = location.protocol == 'http:' ? 'ws://' : 'wss://';
+    const host = location.host;
+    const target = `${proto}${host}/ws/player/${gameID}`;
+    console.log('connecting to', target);
+    ws = new WebSocket(target);
+    ws.onopen = () => { console.log('connected'); };
+    ws.onmessage = (event) => { console.log(event); render(JSON.parse(event.data)); };
+    ws.onclose = () => {
+        console.log('socket closed');
+        setTimeout(connect, 500);
+    };
+    ws.onerror = (e) => {
+        console.log('socket error', e);
+        ws.close();
+    };
 }
 
 function render(game) {
+    console.log('updating ui');
     game.characters.sort(cmp);
     const tmpl = $('#tmplPlayerList').html();
     $('#playerList').html(Mustache.render(tmpl, { game: game }));
@@ -21,7 +34,7 @@ function cmp(a, b) {
 function init() {
     const urlParams = new URLSearchParams(location.search);
     gameID = urlParams.get('gameID')
-    getGameState();
+    connect();
 }
 
 $(init);

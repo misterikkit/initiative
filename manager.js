@@ -5,8 +5,6 @@ const uuid = require('uuid');
 class Manager {
     constructor() {
         this.games = {};
-        this.players = {};
-        this.admins = {};
     }
 
     NewGame(characters) {

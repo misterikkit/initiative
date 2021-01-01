@@ -35,8 +35,8 @@ app.get('/gamestate/:gameID', (req, res) => {
     res.send(game);
 })
 
-app.ws('/ws/player/:gameID', (ws) => { brk.AddPlayerSocket(ws, req.params.gameID); });
-app.ws('/ws/admin/:gameID', (ws) => { brk.AddAdminSocket(ws, req.params.gameID); });
+app.ws('/ws/player/:gameID', (ws, req) => { try { brk.AddPlayerSocket(ws, req.params.gameID); } catch (err) { console.error(err); } });
+app.ws('/ws/admin/:gameID', (ws, req) => { try { brk.AddAdminSocket(ws, req.params.gameID); } catch (err) { console.error(err); } });
 
 app.listen(port, () => {
     console.log(`Initiative backend listening at http://localhost:${port}`)
