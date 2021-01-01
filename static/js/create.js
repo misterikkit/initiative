@@ -14,8 +14,6 @@ function addRow() {
     $('#characterInit').val('');
 }
 
-let mylambda = (arg, barg) => { return arg + barg }
-let myf = function (arg, barg) { return arg + barg }
 
 function handleSubmit() {
     // const data = JSON.stringify($('#initForm').serializeArray());
@@ -28,7 +26,12 @@ function handleSubmit() {
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
     })
-        .done((foo) => { console.log('success', foo) })
+        .done((info) => {
+            if (info.gameId) {
+                location.href = `/game/${info.gameId}`;
+            }
+            console.error('Cannot use game ID from', info);
+        })
         .fail(console.error);
     return false; // prevent form submit
 }
