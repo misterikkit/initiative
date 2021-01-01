@@ -18,7 +18,9 @@ app.post('/create', (req, res) => {
     const newGame = {
         id: uuid.v4(),
         created: Date.now(),
-        characters: chars.map((c) => { return { name: c.name, initiative: c.initiative } })
+        characters: chars.map((c) => { return { name: c.name, initiative: c.initiative } }),
+        currentRound: 1,
+        currentCharIndex: 0
     }
     games[newGame.id] = newGame;
     res.send({ gameId: newGame.id });
