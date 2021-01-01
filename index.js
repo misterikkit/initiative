@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const uuid = require('uuid');
 
 
 const port = process.env.PORT || 8080
@@ -9,14 +10,13 @@ const app = express();
 app.use(express.static('static')); // Client content is statically served
 app.use(bodyParser.json());
 
-let nextId = 1;
 const games = {};
 
 app.post('/create', (req, res) => {
     console.log(req.body)
     const chars = req.body.characters;
     const newGame = {
-        id: nextId++,
+        id: uuid.v4(),
         created: Date.now(),
         characters: chars.map((c) => { return { name: c.name, initiative: c.initiative } })
     }
