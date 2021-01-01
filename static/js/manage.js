@@ -16,6 +16,8 @@ function getGameState() {
 
 function render(game) {
     game.characters.sort(cmp);
+    // This little trick helps with mustache.js rendering
+    game.characters[game.currentCharIndex].current = true;
     const tmpl = $('#tmplPlayerList').html();
     $('#playerList').html(Mustache.render(tmpl, { game: game }));
 }

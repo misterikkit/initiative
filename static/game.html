@@ -4,6 +4,7 @@
 <head>
     <title>Initiative Tracker</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -11,7 +12,7 @@
     <ol id="playerList"></ol>
     <script id="tmplPlayerList" type="x-tmpl-moustache">
     {{#game.characters}}
-        <li>{{name}}</li>
+        <li {{#current}}class="currentPlayer"{{/current}}>{{name}}</li>
     {{/game.characters}}
     </script>
     <script src="https://unpkg.com/mustache@4.1.0"></script>

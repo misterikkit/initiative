@@ -10,7 +10,7 @@ function connect() {
     ws.onmessage = (event) => { console.log(event); render(JSON.parse(event.data)); };
     ws.onclose = () => {
         console.log('socket closed');
-        setTimeout(connect, 500);
+        setTimeout(connect, 500); // reconnect
     };
     ws.onerror = (e) => {
         console.log('socket error', e);
@@ -19,8 +19,9 @@ function connect() {
 }
 
 function render(game) {
-    console.log('updating ui');
     game.characters.sort(cmp);
+    // This little trick helps with mustache.js rendering
+    game.characters[game.currentCharIndex].current = true;
     const tmpl = $('#tmplPlayerList').html();
     $('#playerList').html(Mustache.render(tmpl, { game: game }));
 }
