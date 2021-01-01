@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Initiative Tracker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div id="share"></div>
+    <script id="tmplShare" type="x-tmpl-moustache">
+        Share this link with your players!
+        <input value="{{url}}">
+    </script>
+
+    <ol id="playerList"></ol>
+    <script id="tmplPlayerList" type="x-tmpl-moustache">
+    {{#game.characters}}
+        <li>{{name}}: {{initiative}}</li>
+    {{/game.characters}}
+    </script>
+
+    <!-- controls! -->
+    <button id="btnPrev">prev</button>
+    <button id="btnNext">next</button>
+    <script src="https://unpkg.com/mustache@4.1.0"></script>
+    <script src="/js/manage.js"></script>
+</body>
+
+</html>
