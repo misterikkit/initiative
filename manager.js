@@ -11,7 +11,7 @@ class Manager {
         const newGame = {
             id: uuid.v4(),
             created: Date.now(),
-            characters: characters.map((c) => { return { name: c.name, initiative: c.initiative } }),
+            characters: characters.map((c) => ({ name: c.name, initiative: c.initiative })),
             currentRound: 1,
             currentCharIndex: 0
         }
@@ -21,6 +21,19 @@ class Manager {
 
     Has(gameID) { return (gameID in this.games); }
     Get(gameID) { return this.games[gameID]; }
+
+    Update(gameID, game) {
+        if (!this.Has(gameID)) {
+            // TODO: throw an error?
+            return;
+        }
+        // Only copy certain fields over the existing object.
+        Object.assign(this.games[gameID], {
+            characters: game.characters.map((c) => ({ name: c.name, initiative: c.initiative })),
+            currentRound: game.currentRound,
+            currentCharIndex: game.currentCharIndex
+        })
+    }
 }
 
 exports.Manager = Manager;
