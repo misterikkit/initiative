@@ -1,3 +1,6 @@
+// This is expected to run with CWD set to the app root directory.
+process.chdir(__dirname);
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
