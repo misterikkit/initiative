@@ -9,11 +9,14 @@
 
 <body>
 
-    <ol id="playerList"></ol>
-    <script id="tmplPlayerList" type="x-tmpl-moustache">
-    {{#game.characters}}
-        <li {{#current}}class="currentPlayer"{{/current}}>{{name}}</li>
-    {{/game.characters}}
+    <div id="gameState"></div>
+    <script id="tmplGameState" type="x-tmpl-moustache">
+        <h2>Round {{game.currentRound}}</h2>
+        <ol>
+        {{#game.characters}}
+            <li {{#current}}class="currentPlayer"{{/current}}>{{name}}</li>
+        {{/game.characters}}
+        </ol>
     </script>
     <script src="https://unpkg.com/mustache@4.1.0"></script>
     <script src="/js/game.js"></script>

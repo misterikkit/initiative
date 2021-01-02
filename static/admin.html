@@ -15,11 +15,14 @@
         <input value="{{url}}">
     </script>
 
-    <ol id="playerList"></ol>
-    <script id="tmplPlayerList" type="x-tmpl-moustache">
-    {{#game.characters}}
-        <li {{#current}}class="currentPlayer"{{/current}}>{{name}}: {{initiative}}</li>
-    {{/game.characters}}
+    <div id="gameState"></div>
+    <script id="tmplGameState" type="x-tmpl-moustache">
+        <h2>Round {{game.currentRound}}</h2>
+        <ol>
+        {{#game.characters}}
+            <li {{#current}}class="currentPlayer"{{/current}}>{{name}} ({{initiative}})</li>
+        {{/game.characters}}
+        </ol>
     </script>
 
     <!-- controls! -->
