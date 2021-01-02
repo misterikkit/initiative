@@ -11,18 +11,12 @@ function addRow() {
         name: name,
         initiative: initVal
     });
-    // $('#initForm').append(`<input type="hidden" name="charName" value="${name}">`);
-    // $('#initForm').append(`<input type="hidden" name="charInit" value="${initVal}">`);
 
     $('#characterName').val('').focus();
     $('#characterInit').val('');
 }
 
-
 function handleSubmit() {
-    // const data = JSON.stringify($('#initForm').serializeArray());
-    // const data = JSON.stringify(characters);
-    console.log(characters);
     $.post({
         url: '/create',
         data: JSON.stringify({ characters: characters }),
@@ -49,8 +43,8 @@ function init() {
     $('#initForm').submit(handleSubmit);
     // Submit on ctrl+enter
     $('body').keypress((event) => {
-        const ctrlKey = 10;
-        if (event.keyCode === ctrlKey && event.ctrlKey) { handleSubmit(); }
+        const enterKey = 10;
+        if (event.keyCode === enterKey && event.ctrlKey) { handleSubmit(); }
     })
 }
 
