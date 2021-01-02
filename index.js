@@ -18,8 +18,10 @@ const mgr = new Manager();
 const brk = new Broker(mgr);
 
 app.post('/create', (req, res) => {
-    const gameID = mgr.NewGame(req.body.characters);
-    res.send({ gameId: gameID });
+    try {
+        const gameID = mgr.NewGame(req.body.characters);
+        res.send({ gameId: gameID });
+    } catch (err) { console.error(err); res.sendStatus(400); }
     // This is an ajax handler, so redirect is not useful.
     // res.redirect(`/game/${newGame.id}`);
 })

@@ -11,9 +11,12 @@ class Manager {
         const newGame = {
             id: uuid.v4(),
             created: Date.now(),
-            characters: characters.map((c) => ({ name: c.name, initiative: c.initiative })),
+            characters: characters.map((c) => ({ name: c.name, initiative: parseInt(c.initiative) })),
             currentRound: 1,
             currentCharIndex: 0
+        }
+        if (newGame.characters.some((c) => isNaN(c.initiative))) {
+            throw 'Invalid initiative value';
         }
         this.games[newGame.id] = newGame;
         return newGame.id;
