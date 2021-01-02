@@ -49,14 +49,22 @@ function cmp(a, b) {
 }
 
 function next() {
-    console.log('gonna update')
     if (!sock) { return; }
     game.currentCharIndex++;
     if (game.currentCharIndex >= game.characters.length) {
         game.currentCharIndex -= game.characters.length;
         game.currentRound++;
     }
-    console.log('updating');
+    sock.send(JSON.stringify(game));
+}
+
+function prev() {
+    if (!sock) { return; }
+    game.currentCharIndex--;
+    if (game.currentCharIndex < 0) {
+        game.currentCharIndex += game.characters.length;
+        game.currentRound--;
+    }
     sock.send(JSON.stringify(game));
 }
 
@@ -65,6 +73,7 @@ function init() {
     const urlParams = new URLSearchParams(location.search);
     gameID = urlParams.get('gameID')
     $('#btnNext').click(next);
+    $('#btnPrev').click(prev);
     connect();
 }
 
