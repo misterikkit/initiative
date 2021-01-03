@@ -2,22 +2,48 @@
 <html>
 
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Initiative Tracker</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/style.css">
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <!-- <style>
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+    </style> -->
 </head>
 
 <body>
+    <!-- min-h-screen covers the whole page -->
+    <div class="min-h-screen bg-gray-100 text-white">
 
-    <div id="gameState"></div>
-    <script id="tmplGameState" type="x-tmpl-mustache">
-        <h2>Round {{game.currentRound}}</h2>
-        <ol>
-        {{#game.characters}}
-            <li {{#current}}class="currentPlayer"{{/current}}>{{name}}</li>
-        {{/game.characters}}
-        </ol>
-    </script>
+        <div id="gameState" class="shadow-lg bg-white pb-2">loading...</div>
+
+        <!-- contents for #gameState -->
+        <script id="tmplGameState" type="x-tmpl-mustache">
+            <div class="pt-3 px-6 text-2xl text-indigo-900">Round {{game.currentRound}}</div>
+
+            {{#game.characters}}
+            <div class="flex items-center relative mt-2 px-7 text-xl bg-indigo-600 {{#current}} bg-gradient-to-r from-white text-indigo-900 {{/current}}">
+                {{#current}}
+                <span class="inline-flex absolute left-2 h-3 w-3">
+                  <span class="h-full w-full rounded-full bg-indigo-500 absolute opacity-75 animate-ping"></span>
+                  <span class="h-full w-full rounded-full bg-indigo-600"></span>
+                </span>
+                {{/current}}
+                {{name}}
+            </div>
+            {{/game.characters}}
+        </script>
+
+        <div class="text-indigo-900 italic text-center underline mt-4"><a href="/">Create your own!</a></div>
+
+    </div>
+    <!-- end of page content -->
+
     <script src="https://unpkg.com/mustache@4.1.0"></script>
     <script src="/js/common.js"></script>
     <script src="/js/game.js"></script>
