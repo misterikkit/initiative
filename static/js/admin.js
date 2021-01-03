@@ -29,10 +29,16 @@ function prev() {
     sock.send(JSON.stringify(game));
 }
 
+function copyShareLink() {
+    $('#share input').select();
+    document.execCommand("copy");
+}
+
 function init() {
     initShareBox();
     $('#btnNext').click(next);
     $('#btnPrev').click(prev);
+    $('#btnCopy').click(copyShareLink);
     connect(`ws/admin/${getGameID()}`,
         (newState) => {
             game = newState;
