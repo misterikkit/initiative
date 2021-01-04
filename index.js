@@ -21,23 +21,15 @@ const mgr = new Manager();
 const brk = new Broker(mgr);
 
 app.post('/create', (req, res) => {
-    try {
-        const gameID = mgr.NewGame(req.body.characters);
-        res.send({ gameId: gameID });
-    } catch (err) { console.error(err); res.sendStatus(400); }
+    mgr.NewGame(req.body.characters)
+        .then((gameID) => {
+            res.send({ gameId: gameID });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.sendStatus(400);
+        });
     // This is an ajax handler, so redirect is not useful.
-    // res.redirect(`/game/${newGame.id}`);
-})
-
-app.get('/gamestate/:gameID', (req, res) => {
-    if (!mgr.Has(req.params.gameID)) {
-        res.sendStatus(404);
-        return;
-    }
-    const game = mgr.Get(req.params.gameID);
-    res.setHeader('Cache-Control', 'no-cache');
-    res.type('json'); // shorthand for content-type header
-    res.send(game);
 })
 
 app.ws('/ws/player/:gameID', (ws, req) => { try { brk.AddPlayerSocket(ws, req.params.gameID); } catch (err) { console.error(err); } });

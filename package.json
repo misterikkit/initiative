@@ -11,6 +11,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-ws": "^4.0.0",
+    "keyv": "^4.0.3",
+    "keyv-file": "^0.2.0",
     "uuid": "^8.3.2"
   }
 }

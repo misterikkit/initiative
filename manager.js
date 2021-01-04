@@ -1,13 +1,23 @@
 const uuid = require('uuid');
+const path = require('path');
+const Keyv = require('keyv');
+const { KeyvFile } = require('keyv-file');
 
 // Manager holds the current state of all games.
-// TODO: Manager should also persist & restore game state across server restarts
+// Games are persisted to file using keyv with a TTL of 8 days. Modifying a game resets its TTL.
 class Manager {
     constructor() {
-        this.games = {};
+        this.store = new Keyv({
+            namespace: 'games',
+            store: new KeyvFile({
+                filename: path.join(process.env.HOME, 'initiative.kv')
+            }),
+            ttl: 8 * 24 * 3600 * 1000  // 8 days
+        })
+        this.store.on('error', (err) => console.log('Connection Error', err));
     }
 
-    NewGame(characters) {
+    async NewGame(characters) {
         const newGame = {
             id: uuid.v4(),
             created: Date.now(),
@@ -18,24 +28,28 @@ class Manager {
         if (newGame.characters.some((c) => isNaN(c.initiative))) {
             throw 'Invalid initiative value';
         }
-        this.games[newGame.id] = newGame;
+        // TODO: Check return of store.set().
+        await this.store.set(newGame.id, newGame);
         return newGame.id;
     }
 
-    Has(gameID) { return (gameID in this.games); }
-    Get(gameID) { return this.games[gameID]; }
+    // Returns the game with the given ID, or undefined if no such game exists.
+    async Get(gameID) { return await this.store.get(gameID); }
 
-    Update(gameID, game) {
-        if (!this.Has(gameID)) {
+    async Update(gameID, game) {
+        const existingGame = await this.Get(gameID);
+
+        if (!existingGame) {
             // TODO: throw an error?
             return;
         }
         // Only copy certain fields over the existing object.
-        Object.assign(this.games[gameID], {
+        Object.assign(existingGame, {
             characters: game.characters.map((c) => ({ name: c.name, initiative: c.initiative })),
             currentRound: game.currentRound,
             currentCharIndex: game.currentCharIndex
         })
+        await this.store.set(gameID, existingGame);
     }
 }
 
