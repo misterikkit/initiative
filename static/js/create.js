@@ -11,7 +11,7 @@ function addRow() {
         name: name,
         initiative: initVal
     });
-
+    $('#instruction').hide();
     $('#characterName').val('').focus();
     $('#characterInit').val('');
 }
